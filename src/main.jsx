@@ -4,7 +4,7 @@ import App from './components/App'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <Router>
+  <React.StrictMode>
     <App />
-  </Router>,
+  </React.StrictMode>,
 )

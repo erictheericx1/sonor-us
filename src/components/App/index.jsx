@@ -1,31 +1,52 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+// import Card from '../Card';
 import './styles.css'
 
 
 function App() {
-  const [artists, setArtists] = useState([])
+  const [userData, setUserData] = useState(null);
 
-  // Query the API on component mount
+
+
   useEffect(() => {
+const fetchUserData = async () => {
+  try {
+    const response = await fetch ('https://api.spotify.com/v1/playlists/3cEYpjA9oz9GiPac4AsH4n', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer 1POdFZRZbvb...qqillRxMr2z', // Replace with your actual access token
+      },
+    });
 
-    // Define an async function to JSONify the query response  
-    async function getData() {
-      const res = await fetch('https://itunes.apple.com/search?')
-      const { data } = await res.json()
-      setArtists(data)
+    if (response.ok) {
+      const data = await response.json();
+      setUserData(data);
+    } else {
+      console.error('Failed to get user data', response.status, response.statusText); 
     }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};     
 
-    // Call the async function
-    getData()
-  }, [])
+// Call the function to fetch the data
+  fetchUserData();
 
-  //  Create the HTML using JSX for the App component
+}, []);
+
   return (
-    <>
-      <h1>Aesthetic Domain</h1>
-      {artists.artistName > 0 ? <img src={artists[1].image} /> : <p>Your artwork is loading...</p>}
-    </>
-  )
+    <div className="App">
+      <h1 className='text-center m-2 border-2 border-black rounded-lg cursor-pointer bg-gray-700 bg-opacity-70 text-gray-300 hover:text-white hover:bg-gray-800 hover:transform hover:scale-105 shadow-lg transition ease duration-50'>Sonor-US</h1>
+      <h3 className='text-teal-600'>Music for us, by us</h3>
+    </div>
+
+    // <div>
+    //   {userData && (
+    //       <h2>User Data</h2>
+    //       <pre>{JSON.stringify(userData, null, 2)}</pre>
+    // </div>
+
+  );
 }
 
-export default App 
+export default App;
