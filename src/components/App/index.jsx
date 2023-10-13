@@ -94,17 +94,24 @@ const fetchUserData = async () => {
               </li>              
             </ul>
         </nav>
+        
 
               <section class="hero">
                   <h1 className='text-3xl text-center font-bold mb-4 bg-teal text-white'>Sonor-US</h1>
                   <h3 className='text-teal-200'>Music for us, by us</h3>
             </section>
-{/* 
-      <Routes>
-        <Route path="/" element={<Sidenav />} />
 
-      </Routes> */}
-    </>
+            <section class="card">
+              <div class="card__content">
+                <h2 class="card__title">Card Title</h2>
+                  <div class="card__body">
+                    
+                  </div>
+            
+          </div>
+        </section>
+        </> 
+
   );
 }
 
