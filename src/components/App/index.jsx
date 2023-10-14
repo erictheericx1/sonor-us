@@ -2,39 +2,59 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Sidenav from '../Sidenav';
-// import Card from '../Card';
+import Card from '../Card';
 import './styles.css'
 
+const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+const clientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
 
 function App() {
-  const [userData, setUserData] = useState(null);
+  const [artistData, setArtistData] = useState(null);
 
 
 
-  useEffect(() => {
-const fetchUserData = async () => {
+useEffect(() => {
+
+/* function for authorization Token
+------------------------------------------------*/
+
+// const authParams = {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/x-www-form-urlencoded',
+//     },     
+//     body: 'grant_type=client_credentials&client_id=' + clientId + '&client_secret=' + clientSecret
+//   } 
+
+//   fetch('https://accounts.spotify.com/api/token', authParams)
+//   .then(result => result.json())
+//   .then(data => console.log(data))
+//   }, [])  
+
+const fetchArtistData = async () => {
   try {
-    const response = await fetch ('https://api.spotify.com/v1/playlists/3cEYpjA9oz9GiPac4AsH4n', {
+    const accessToken = import.meta.env.VITE_SPOTIFY_ACCESS_TOKEN;
+
+
+    const response = await fetch('https://api.spotify.com/v1/playlists/3cEYpjA9oz9GiPac4AsH4n', {
       method: 'GET',
       headers: {
-        'Authorization': 'Bearer 1POdFZRZbvb...qqillRxMr2z', // Replace with your actual access token
+        'Authorization': `Bearer ${accessToken}`,
       },
     });
 
     if (response.ok) {
       const data = await response.json();
-      setUserData(data);
+      setArtistData(data);
     } else {
-      console.error('Failed to get user data', response.status, response.statusText); 
+      console.error('Failed to get artist data', response.status, response.statusText);
     }
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};     
+  } catch (error) 
+{}};
+
 
 // Call the function to fetch the data
-  fetchUserData();
-
+fetchArtistData();
 }, []);
 
   return (
@@ -96,21 +116,20 @@ const fetchUserData = async () => {
         </nav>
         
 
-              <section class="hero">
+              <section className="hero">
                   <h1 className='text-3xl text-center font-bold mb-4 bg-teal text-white'>Sonor-US</h1>
                   <h3 className='text-teal-200'>Music for us, by us</h3>
             </section>
 
-            <section class="card">
-              <div class="card__content">
-                <h2 class="card__title">Card Title</h2>
-                  <div class="card__body">
-                    
-                  </div>
-            
-          </div>
-        </section>
-        </> 
+
+            {artistData && (
+              <div className="card__content">
+                {artistData.items.map((artist) => (
+                  <Card key={artist.id} artists={artist} />
+                ))}
+              </div>
+            )}
+    </> 
 
   );
 }
