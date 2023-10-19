@@ -75,16 +75,22 @@ function App() {
             placeholder="Who do you want to listen to?"
             aria-label="Search"
             value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)} />
-          <button className="btn btn-outline-secondary rounded" onClick={search}>
+            onChange={(e) => setSearchInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                search();
+              }
+            }}/>
+          <button className="bg-white hover:bg-blue-500 text-blue-700 hover:text-white font-bold m-3 py-2 px-4 rounded"
+onClick={search}>
             Search
           </button>
         </div>
 
-        <div className="max-w-xs rounded overflow-hidden shadow-lg grid-rows-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {albums.length > 0 ? (
             albums.map((album, index) => (
-              <div key={index}>
+              <div key={index} className="max-w-xs rounded overflow-hidden shadow-lg">
                 <img src={album.images[0].url} alt="album" className="w-full" />
                 <div className="px-6 py-4">
                   <p className="font-bold text-xl mb-2">{album.name}</p>
