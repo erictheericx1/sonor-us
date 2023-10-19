@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import './styles.css'
+import './styles.css';
+import Nav from '../Nav';
 
-const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
-const clientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
+// const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+// const clientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
+
+const accessToken = import.meta.env.VITE_SPOTIFY_ACCESS_TOKEN;
+
 
 function App() {
   const [searchInput, setSearchInput] = useState("");
@@ -12,19 +16,19 @@ function App() {
 /* function for authorization Token
 // ------------------------------------------------*/
 useEffect(() => {
-  //API Access Token
-  const authParams = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      },     
-      body: 'grant_type=client_credentials&client_id=' + clientId + '&client_secret=' + clientSecret
-    } 
+  // //API Access Token
+  // const authParams = {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded',
+  //     },     
+  //     body: 'grant_type=client_credentials&client_id=' + clientId + '&client_secret=' + clientSecret
+  //   } 
 
-    fetch('https://accounts.spotify.com/api/token', authParams)
-    .then(result => result.json())
-    .then(data => console.log(data))
-    }, [])  
+  //   fetch('https://accounts.spotify.com/api/token', authParams)
+  //   .then(result => result.json())
+  //   .then(data => console.log(data))
+    }, []);
 
 
     //Search Function
@@ -58,24 +62,13 @@ useEffect(() => {
     
     return (
       <>
-          
-              <section className="search">
-                <input
-                  type="search"
-                  className="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-                  placeholder="Search"
-                  aria-label="Search"
-                  aria-describedby="button-addon1"
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)} />
-                <button onClick={search}>
-                  Search
-                </button>
-              </section>
-
+        <Nav />
+              
+            
+              
               <section className="hero">
-                <h1 className='text-3xl text-center font-bold mb-4 bg-teal text-white'>Sonor-US</h1>
-                <h3 className='text-teal-200'>Music for us, by us</h3>
+                <h1 className='text-5xl text-center font-bold mb-4'>Sonor-US</h1>
+                <h3 className='text-indigo-400'>Music for us, by us</h3>
               </section>
 
               <section className="card">
@@ -91,9 +84,23 @@ useEffect(() => {
                     )
                   })}
                 </div>
+
+                <section className="search">
+                <input
+                  type="search"
+                  className="rounded w-5/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                  placeholder="Who do you want to listen to?"
+                  aria-label="Search"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)} />
+                <button className="btn btn-outline-secondary rounded" onClick={search}>
+                  Search
+                </button>
+              </section>
+
               </section>
       </>
     );
-  []}
+  }
 
 export default App; 
