@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './styles.css';
 import Nav from '../Nav';
 
 const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
@@ -16,7 +15,7 @@ function App() {
 /* function for authorization Token
 // ------------------------------------------------*/
   useEffect(() => {
-  // //API Access Token
+  // // //API Access Token
   const authParams = {
     method: 'POST',
     headers: {
@@ -60,47 +59,57 @@ function App() {
     
   return (
     <>
-      <Nav />
-               
-      <section className="hero">
-        <h1 className='text-5xl text-center font-bold mb-4'>Sonor-US</h1>
-        <h3 className='text-indigo-400'>Music for us, by us</h3>
-      </section>
-
-      <section className="card">
-        <div>
-          <input
-            type="search"
-            className="rounded w-5/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-            placeholder="Who do you want to listen to?"
-            aria-label="Search"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                search();
-              }
-            }}/>
-          <button className="bg-white hover:bg-blue-500 text-blue-700 hover:text-white font-bold m-3 py-2 px-4 rounded"
-onClick={search}>
-            Search
-          </button>
+      <div className="flex">
+        <div className="w-1/4">
+          <section className="Nav">
+            <Nav />
+          </section>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {albums.length > 0 ? (
-            albums.map((album, index) => (
-              <div key={index} className="max-w-xs rounded overflow-hidden shadow-lg">
-                <img src={album.images[0].url} alt="album" className="w-full" />
-                <div className="px-6 py-4">
-                  <p className="font-bold text-xl mb-2">{album.name}</p>
-                </div>
-              </div>
-            ))
-          ) : null}
-        </div>
+        <div className="w-3/4">          
+          <section className="hero">
+            <h1 className='text-5xl text-center font-bold'>Sonor-US</h1>
+            {/* <h3 className='text-purple-400'>Music for us, by us</h3> */}
+          </section>
 
-      </section>
+          <section className="card">
+            <div>
+              <input
+                type="search"
+                className="rounded w-5/6 py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                placeholder="Who do you want to listen to?"
+                aria-label="Search"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    search();
+                  }
+                }}/>
+              <button className="transition ease-in-out delay-150 over:-translate-y-1 hover:bg-indigo-500 duration-300 ... bg-white hover:bg-purple-800 text-purple-800 hover:text-white font-bold m-3 py-2 px-4 rounded"
+                onClick={search}>
+                Search
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {albums.length > 0 ? (
+                albums.map((album, index) => (
+                  <div key={index} className="max-w-xs rounded overflow-hidden shadow-lg">
+                    <img src={album.images[0].url} alt="album" className="w-full" />
+                    <div className="px-6 py-4">
+                      <p className="font-bold text-xl mb-2">Name of album: {album.name}</p>
+                      <p className="text-base">Release Date: {album.release_date}</p>
+                      <p> Total Tracks: {album.total_tracks}</p>  
+                    </div>
+                  </div>
+                ))
+              ) : null}
+            </div>
+
+          </section>
+        </div>
+      </div>  
     </>
   );
 }
